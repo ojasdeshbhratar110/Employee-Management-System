@@ -1,269 +1,4692 @@
+/* =========================================================
+   ENTERPRISE EMPLOYEE MANAGEMENT SYSTEM
+   ========================================================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #222;
+:root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --surface-soft: #f9fafb;
+
+    --sidebar: #0b1220;
+    --sidebar-hover: #172033;
+
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-soft: #eff6ff;
+
+    --text: #111827;
+    --text-secondary: #667085;
+    --text-light: #98a2b3;
+
+    --border: #e4e7ec;
+    --border-light: #f0f1f3;
+
+    --success: #16a34a;
+    --danger: #dc2626;
+
+    --radius: 12px;
+
+    --shadow:
+        0 1px 2px rgba(16, 24, 40, 0.03),
+        0 2px 6px rgba(16, 24, 40, 0.04);
 }
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* =========================================================
+   APP
+   ========================================================= */
 
 .app {
     display: flex;
     min-height: 100vh;
 }
 
-/* Sidebar */
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
 
 .sidebar {
-    width: 240px;
-    background: #111827;
-    color: white;
-    padding: 25px 20px;
+    width: 250px;
+    min-width: 250px;
+    min-height: 100vh;
+
+    background: var(--sidebar);
+
+    padding: 30px 18px;
+
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .logo {
-    font-size: 28px;
-    margin-bottom: 40px;
+    color: white;
+
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+
+    padding: 0 12px;
+    margin-bottom: 42px;
 }
 
 .sidebar nav {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
 }
 
 .sidebar nav a {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    min-height: 44px;
+
+    padding: 11px 14px;
+
+    color: #98a2b3;
+
     text-decoration: none;
-    color: #cbd5e1;
-    padding: 13px 15px;
+
     border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
 }
 
-.sidebar nav a:hover,
-.sidebar nav a.active {
-    background: #2563eb;
+.sidebar nav a:hover {
+    background: var(--sidebar-hover);
     color: white;
 }
 
-/* Main Content */
+.sidebar nav a.active {
+    background: #1d4ed8;
+    color: white;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.15),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================================
+   MAIN AREA
+   ========================================================= */
 
 .main-content {
     flex: 1;
-    padding: 35px;
+    min-width: 0;
+
+    padding: 38px 42px 50px;
+
+    max-width: 1700px;
 }
 
-/* Header */
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     margin-bottom: 30px;
 }
 
 .header h1 {
-    font-size: 32px;
+    font-size: 30px;
+    line-height: 1.2;
+
+    font-weight: 700;
+    letter-spacing: -0.8px;
+
+    color: #101828;
 }
 
 .header p {
-    color: #6b7280;
-    margin-top: 5px;
+    color: var(--text-secondary);
+
+    margin-top: 7px;
+
+    font-size: 14px;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.add-btn,
+.submit-btn {
+    border: none;
+    outline: none;
+
+    background: var(--primary);
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.1s ease;
 }
 
 .add-btn {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 12px 20px;
+    padding: 11px 18px;
+
     border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
+
+    font-size: 14px;
+
+    box-shadow:
+        0 1px 2px rgba(16, 24, 40, 0.08),
+        0 1px 3px rgba(37, 99, 235, 0.2);
 }
 
-.add-btn:hover {
-    background: #1d4ed8;
+.add-btn:hover,
+.submit-btn:hover {
+    background: var(--primary-dark);
 }
 
-/* Statistics */
+.add-btn:active,
+.submit-btn:active {
+    transform: translateY(1px);
+}
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
 
 .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
+    display: grid !important;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
+    gap: 18px !important;
+
+    margin-bottom: 24px !important;
+
+    width: 100% !important;
 }
 
 .card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+
+    background: var(--surface);
+
+    padding: 22px 24px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.card:hover {
+    border-color: #d0d5dd;
+
+    box-shadow:
+        0 2px 5px rgba(16, 24, 40, 0.05),
+        0 6px 14px rgba(16, 24, 40, 0.04);
+
+    transform: translateY(-1px);
 }
 
 .card h3 {
-    color: #6b7280;
-    font-size: 15px;
-    margin-bottom: 12px;
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 10px;
 }
 
 .card p {
     font-size: 28px;
-    font-weight: bold;
+
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    letter-spacing: -0.8px;
+
+    color: #101828;
 }
 
-/* Employee Section */
+/* subtle enterprise accent */
+
+.stats .card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 18px;
+
+    width: 3px;
+    height: 28px;
+
+    background: var(--primary);
+
+    border-radius: 0 3px 3px 0;
+
+    opacity: 0.85;
+}
+
+/* =========================================================
+   DASHBOARD GRID
+   ========================================================= */
+
+.dashboard-bottom {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr);
+
+    gap: 20px;
+
+    width: 100%;
+}
+
+.dashboard-panel {
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 24px;
+
+    min-height: 300px;
+
+    box-shadow: var(--shadow);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 18px;
+    margin-bottom: 4px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.panel-header h2 {
+    font-size: 17px;
+
+    line-height: 1.4;
+
+    font-weight: 650;
+
+    letter-spacing: -0.3px;
+
+    color: #101828;
+}
+
+.panel-header p {
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    margin-top: 3px;
+}
+
+.view-all-btn {
+    border: 1px solid var(--border);
+
+    background: white;
+
+    color: #344054;
+
+    padding: 8px 12px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: 0.18s ease;
+}
+
+.view-all-btn:hover {
+    background: var(--surface-soft);
+
+    border-color: #d0d5dd;
+}
+
+/* =========================================================
+   DASHBOARD EMPLOYEES
+   ========================================================= */
+
+.dashboard-employee-item {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    min-height: 67px;
+
+    padding: 14px 4px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.dashboard-employee-item:last-child {
+    border-bottom: none;
+}
+
+.employee-left {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.employee-left strong {
+    color: #101828;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.employee-left span {
+    color: var(--text-secondary);
+
+    font-size: 12.5px;
+}
+
+.employee-salary {
+    color: #344054;
+
+    font-size: 13.5px;
+
+    font-weight: 600;
+
+    background: #f9fafb;
+
+    border: 1px solid var(--border-light);
+
+    padding: 6px 9px;
+
+    border-radius: 6px;
+}
+
+/* =========================================================
+   DEPARTMENT OVERVIEW
+   ========================================================= */
+
+.department-overview-item {
+    padding: 14px 2px;
+}
+
+.department-overview-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+
+    font-size: 13px;
+}
+
+.department-overview-top span:first-child {
+    color: #344054;
+
+    font-weight: 600;
+}
+
+.department-overview-top span:last-child {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.department-bar {
+    height: 7px;
+
+    background: #eef2f6;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.department-bar-fill {
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    border-radius: inherit;
+}
+
+/* =========================================================
+   EMPLOYEE VIEW / DEPARTMENT VIEW
+   ========================================================= */
 
 .employee-section {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 26px;
+
+    box-shadow: var(--shadow);
 }
 
 .section-header {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
-    margin-bottom: 20px;
+
+    margin-bottom: 24px;
 }
 
 .section-header h2 {
+    color: #101828;
+
     font-size: 22px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.4px;
 }
 
 .section-header input {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
+    width: 260px;
+
+    padding: 10px 13px;
+
+    border: 1px solid #d0d5dd;
+
+    background: white;
+
     border-radius: 8px;
+
     outline: none;
+
+    color: #344054;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
 }
 
-/* Table */
+.section-header input::placeholder {
+    color: #98a2b3;
+}
+
+.section-header input:focus {
+    border-color: #84adff;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
 
 table {
     width: 100%;
-    border-collapse: collapse;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    overflow: hidden;
 }
 
-th,
-td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
+thead {
+    background: #f9fafb;
 }
 
 th {
-    color: #6b7280;
-    font-size: 14px;
+    padding: 12px 14px;
+
+    text-align: left;
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+
+    color: #667085;
+
+    font-size: 11.5px;
+
+    font-weight: 650;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.04em;
+}
+
+th:first-child {
+    border-left: 1px solid var(--border);
+
+    border-radius: 8px 0 0 8px;
+}
+
+th:last-child {
+    border-right: 1px solid var(--border);
+
+    border-radius: 0 8px 8px 0;
 }
 
 td {
-    font-size: 14px;
+    padding: 16px 14px;
+
+    color: #344054;
+
+    font-size: 13.5px;
+
+    border-bottom: 1px solid var(--border-light);
 }
 
-td button {
-    border: none;
-    padding: 7px 10px;
-    border-radius: 5px;
+tbody tr {
+    transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+    background: #fcfcfd;
+}
+
+/* =========================================================
+   TABLE ACTION BUTTONS
+   ========================================================= */
+
+.edit-btn,
+.delete-btn {
+    padding: 6px 10px;
+
+    border-radius: 6px;
+
+    border: 1px solid transparent;
+
     cursor: pointer;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    transition: 0.15s ease;
+}
+
+.edit-btn {
+    background: #eff6ff;
+
+    color: #1d4ed8;
+
+    border-color: #dbeafe;
+
     margin-right: 5px;
 }
 
-td button:first-child {
-    background: #e0e7ff;
-    color: #3730a3;
+.edit-btn:hover {
+    background: #dbeafe;
 }
 
-td button:last-child {
+.delete-btn {
+    background: #fff5f5;
+
+    color: var(--danger);
+
+    border-color: #fee2e2;
+}
+
+.delete-btn:hover {
     background: #fee2e2;
-    color: #b91c1c;
 }
 
-/* Add Employee Modal */
+/* =========================================================
+   DEPARTMENT CARDS
+   ========================================================= */
+
+#departmentList {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+#departmentList .card {
+    margin-bottom: 0 !important;
+}
+
+#departmentList .card h3 {
+    font-size: 14px;
+
+    color: #344054;
+}
+
+#departmentList .card p {
+    font-size: 22px;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
 
 .modal {
     display: none;
+
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    justify-content: center;
+
+    inset: 0;
+
+    z-index: 1000;
+
     align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(16, 24, 40, 0.55);
+
+    backdrop-filter: blur(3px);
 }
 
 .modal-content {
+    width: 460px;
+
+    max-width: 100%;
+
     background: white;
-    width: 450px;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 20px 50px rgba(16, 24, 40, 0.2);
 }
 
 .modal-header {
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
-    margin-bottom: 25px;
+
+    justify-content: space-between;
+
+    padding-bottom: 18px;
+
+    margin-bottom: 22px;
+
+    border-bottom: 1px solid var(--border-light);
 }
 
 .modal-header h2 {
-    font-size: 24px;
+    font-size: 20px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.3px;
 }
 
 .close-btn {
-    background: none;
+    width: 32px;
+    height: 32px;
+
     border: none;
-    font-size: 28px;
+
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #667085;
+
+    font-size: 23px;
+
     cursor: pointer;
-    color: #666;
+
+    transition: 0.15s ease;
 }
 
 .close-btn:hover {
-    color: #111;
+    background: #f2f4f7;
+
+    color: #101828;
 }
 
+/* =========================================================
+   FORMS
+   ========================================================= */
+
 .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 17px;
 }
 
 .form-group label {
     display: block;
+
     margin-bottom: 7px;
-    font-weight: bold;
-    font-size: 14px;
+
+    color: #344054;
+
+    font-size: 13px;
+
+    font-weight: 600;
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 11px;
-    border: 1px solid #d1d5db;
-    border-radius: 7px;
-    font-size: 14px;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #344054;
+
+    font-size: 13.5px;
+
     outline: none;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: #2563eb;
+    border-color: #84adff;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
 .submit-btn {
     width: 100%;
-    padding: 12px;
-    background: #2563eb;
-    color: white;
+
+    margin-top: 6px;
+
+    padding: 11px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .dashboard-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    #departmentList {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 760px) {
+
+    .sidebar {
+        width: 200px;
+        min-width: 200px;
+    }
+
+    .main-content {
+        padding: 25px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr !important;
+    }
+
+    #departmentList {
+        grid-template-columns: 1fr;
+    }
+}
+.stat-meta {
+    display: block;
+    margin-top: 9px;
+    font-size: 11.5px;
+    color: #98a2b3;
+    font-weight: 500;
+}
+/* =========================================================
+   PREMIUM EMPLOYEE DIRECTORY
+   ========================================================= */
+
+.dashboard-employee-item {
+    display: grid;
+
+    grid-template-columns:
+        minmax(220px, 1.5fr)
+        minmax(80px, 0.55fr)
+        minmax(90px, 0.55fr)
+        auto;
+
+    align-items: center;
+
+    gap: 18px;
+
+    min-height: 72px;
+
+    padding: 13px 4px;
+
+    border-bottom: 1px solid #f0f1f3;
+}
+
+.dashboard-employee-item:last-child {
+    border-bottom: none;
+}
+
+.employee-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.employee-avatar {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #eff6ff;
+
+    border: 1px solid #dbeafe;
+
+    color: #2563eb;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+}
+
+.employee-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.employee-info strong {
+    font-size: 13.5px;
+
+    font-weight: 650;
+
+    color: #101828;
+}
+
+.employee-info span {
+    font-size: 12px;
+
+    color: #667085;
+}
+
+.employee-department {
+    justify-self: start;
+
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    background: #f2f4f7;
+
+    color: #475467;
+
+    font-size: 11.5px;
+
+    font-weight: 600;
+}
+
+.employee-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #15803d;
+
+    font-size: 11.5px;
+
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 3px #dcfce7;
+}
+
+.employee-salary {
+    justify-self: end;
+
+    background: transparent;
+
     border: none;
+
+    padding: 0;
+
+    color: #344054;
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+.empty-state {
+    padding: 38px 0;
+
+    text-align: center;
+
+    color: #98a2b3;
+
+    font-size: 13px;
+}
+/* =========================================================
+   ENTERPRISE SIDEBAR BRANDING
+   ========================================================= */
+
+.sidebar {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100vh;
+
+    position: sticky;
+    top: 0;
+
+    padding: 26px 18px 20px;
+}
+
+
+/* BRAND */
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 7px 26px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.brand-mark {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #2563eb;
+
+    color: white;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    letter-spacing: 0.5px;
+
+    box-shadow:
+        0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.brand-info {
+    min-width: 0;
+}
+
+.brand-info h2 {
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.2px;
+}
+
+.brand-info span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #667085;
+
+    font-size: 10.5px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* NAVIGATION LABEL */
+
+.nav-label {
+    padding: 0 13px;
+
+    margin-bottom: 8px;
+
+    color: #475467;
+
+    font-size: 9.5px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+}
+
+
+/* NAVIGATION */
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-height: 43px;
+
+    padding: 10px 12px;
+
+    border-radius: 8px;
+
+    color: #98a2b3;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+        background 0.16s ease,
+        color 0.16s ease;
+}
+
+.sidebar nav a:hover {
+    background: rgba(255, 255, 255, 0.05);
+
+    color: #f9fafb;
+}
+
+.sidebar nav a.active {
+    background: rgba(37, 99, 235, 0.16);
+
+    color: #ffffff;
+
+    box-shadow:
+        inset 3px 0 0 #3b82f6;
+}
+
+.nav-icon {
+    width: 20px;
+
+    display: inline-flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    color: #667085;
+
+    font-size: 16px;
+}
+
+.sidebar nav a.active .nav-icon {
+    color: #60a5fa;
+}
+
+.sidebar nav a:hover .nav-icon {
+    color: #d0d5dd;
+}
+
+
+/* SIDEBAR FOOTER */
+
+.sidebar-footer {
+    margin-top: auto;
+
+    padding-top: 18px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+/* SYSTEM STATUS */
+
+.system-indicator {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 10px 9px 17px;
+}
+
+.system-dot {
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    margin-top: 4px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 3px rgba(34, 197, 94, 0.12);
+}
+
+.system-indicator div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.system-indicator strong {
+    color: #d0d5dd;
+
+    font-size: 10.5px;
+
+    font-weight: 600;
+}
+
+.system-indicator div span {
+    color: #475467;
+
+    font-size: 9.5px;
+}
+
+
+/* PROFILE */
+
+.sidebar-profile {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px 9px;
+
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.profile-avatar {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #1f2937;
+
+    border: 1px solid #344054;
+
+    color: #d0d5dd;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    gap: 3px;
+}
+
+.profile-info strong {
+    color: #e5e7eb;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.profile-info span {
+    color: #667085;
+
+    font-size: 9.5px;
+}
+/* =========================================================
+   PREMIUM DEPARTMENT OVERVIEW
+   ========================================================= */
+
+.department-overview-item {
+    padding: 18px 2px;
+
+    border-bottom:
+        1px solid #f0f1f3;
+}
+
+.department-overview-item:last-child {
+    border-bottom: none;
+}
+
+.department-details {
+    margin-bottom: 11px;
+}
+
+.department-name-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.department-name {
+    color: #101828;
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+.department-percentage {
+    padding: 4px 7px;
+
+    background: #eff6ff;
+
+    border:
+        1px solid #dbeafe;
+
+    border-radius: 6px;
+
+    color: #2563eb;
+
+    font-size: 10.5px;
+
+    font-weight: 700;
+}
+
+.department-count {
+    margin-top: 4px;
+
+    color: #98a2b3;
+
+    font-size: 11px;
+}
+
+.department-bar {
+    width: 100%;
+
+    height: 6px;
+
+    background: #eef2f6;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.department-bar-fill {
+    height: 100%;
+
+    background: #2563eb;
+
+    border-radius: 999px;
+
+    transition:
+        width 0.4s ease;
+}
+/* =========================================================
+   EMPLOYEE PAGE TOOLBAR
+   ========================================================= */
+
+.section-subtitle {
+    margin-top: 5px;
+
+    color: #667085;
+
+    font-size: 12px;
+}
+
+.employee-toolbar {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.employee-toolbar .add-btn {
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   REPORTS PAGE
+   ========================================================= */
+
+.reports-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 28px;
+}
+
+.reports-header h1 {
+    color: #101828;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.7px;
+}
+
+.reports-header p {
+    margin-top: 7px;
+
+    color: #667085;
+
+    font-size: 14px;
+}
+
+.report-badge {
+    padding: 7px 10px;
+
+    background: #ecfdf3;
+
+    border: 1px solid #d1fadf;
+
     border-radius: 7px;
+
+    color: #15803d;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+/* REPORT KPI */
+
+.report-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+.report-stat-card {
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 135px;
+
+    padding: 22px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 1px 3px
+        rgba(16, 24, 40, 0.04);
+}
+
+.report-stat-label {
+    color: #667085;
+
+    font-size: 11px;
+
+    font-weight: 650;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
+}
+
+.report-stat-card strong {
+    margin-top: 12px;
+
+    color: #101828;
+
+    font-size: 26px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.6px;
+}
+
+.report-stat-card small {
+    margin-top: auto;
+
+    color: #98a2b3;
+
+    font-size: 11px;
+}
+
+
+/* REPORT GRID */
+
+.reports-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.5fr 1fr;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.report-panel {
+    padding: 24px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 1px 3px
+        rgba(16, 24, 40, 0.04);
+}
+
+.report-panel-header {
+    padding-bottom: 17px;
+
+    margin-bottom: 8px;
+
+    border-bottom:
+        1px solid #f0f1f3;
+}
+
+.report-panel-header h2 {
+    color: #101828;
+
+    font-size: 17px;
+
+    font-weight: 650;
+}
+
+.report-panel-header p {
+    margin-top: 4px;
+
+    color: #667085;
+
+    font-size: 12px;
+}
+
+
+/* REPORT DEPARTMENTS */
+
+.report-department-row {
+    padding: 15px 0;
+
+    border-bottom:
+        1px solid #f2f4f7;
+}
+
+.report-department-row:last-child {
+    border-bottom: none;
+}
+
+.report-department-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+}
+
+.report-department-top strong {
+    color: #344054;
+
+    font-size: 13px;
+}
+
+.report-department-top span {
+    color: #667085;
+
+    font-size: 11px;
+}
+
+.report-department-row small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #98a2b3;
+
+    font-size: 10px;
+}
+
+
+/* SALARY METRICS */
+
+.salary-metric {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    min-height: 58px;
+
+    border-bottom:
+        1px solid #f2f4f7;
+}
+
+.salary-metric:last-child {
+    border-bottom: none;
+}
+
+.salary-metric span {
+    color: #667085;
+
+    font-size: 12px;
+}
+
+.salary-metric strong {
+    color: #101828;
+
+    font-size: 14px;
+
+    font-weight: 650;
+}
+
+
+/* REPORT TABLE */
+
+.report-table-panel {
+    margin-bottom: 30px;
+}
+
+.report-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #15803d;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DEPARTMENT PAGE ENHANCEMENT
+   ========================================================= */
+
+.department-card-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.department-card-top span {
+    padding: 4px 7px;
+
+    background: #eff6ff;
+
+    border-radius: 6px;
+
+    color: #2563eb;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.department-card-meta {
+    margin-top: 9px;
+
+    color: #98a2b3;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+.settings-page {
+    max-width: 900px;
+}
+
+.settings-header {
+    margin-bottom: 26px;
+}
+
+.settings-header h1 {
+    color: #101828;
+
+    font-size: 30px;
+
+    font-weight: 700;
+}
+
+.settings-header p {
+    margin-top: 7px;
+
+    color: #667085;
+
+    font-size: 14px;
+}
+
+.settings-card {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 22px;
+
+    margin-bottom: 12px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 11px;
+}
+
+.settings-card h3 {
+    color: #101828;
+
+    font-size: 14px;
+}
+
+.settings-card p {
+    margin-top: 5px;
+
+    color: #667085;
+
+    font-size: 12px;
+}
+
+.settings-tag {
+    padding: 5px 8px;
+
+    background: #f2f4f7;
+
+    border-radius: 6px;
+
+    color: #475467;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.settings-success {
+    background: #ecfdf3;
+
+    color: #15803d;
+}
+
+
+/* =========================================================
+   RESPONSIVE REPORTS
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .report-stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .reports-grid {
+        grid-template-columns:
+            1fr;
+    }
+}
+/* =========================================================
+   PHASE 1A — MODERN HRMS VISUAL SHELL
+   Reference-inspired soft SaaS redesign
+   ========================================================= */
+
+:root {
+    --hr-bg: #f7f7fb;
+    --hr-sidebar: #f4f0ff;
+    --hr-sidebar-deep: #ebe4ff;
+    --hr-card: #ffffff;
+    --hr-border: #ececf2;
+    --hr-text: #20202a;
+    --hr-muted: #8a8b98;
+    --hr-primary: #7867d9;
+    --hr-primary-soft: #eeeaff;
+    --hr-success: #55b89a;
+    --hr-warning: #f0b86c;
+    --hr-danger: #e97777;
+    --hr-shadow: 0 8px 30px rgba(44, 39, 90, 0.06);
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+body {
+    background: var(--hr-bg);
+    color: var(--hr-text);
+}
+
+.app {
+    min-height: 100vh;
+    background: var(--hr-bg);
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    width: 230px;
+    min-width: 230px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f6f2ff 0%,
+            #f1edff 100%
+        );
+
+    border-right: 1px solid #e9e4f5;
+
+    padding: 22px 16px 18px;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.sidebar-brand {
+    border-bottom: none;
+
+    padding: 6px 8px 24px;
+
+    margin-bottom: 8px;
+}
+
+.brand-mark {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8676df,
+            #6d5fd1
+        );
+
+    box-shadow:
+        0 6px 18px
+        rgba(120, 103, 217, 0.22);
+
+    font-size: 11px;
+}
+
+.brand-info h2 {
+    color: #2d2942;
+
+    font-size: 16px;
+
+    font-weight: 750;
+}
+
+.brand-info span {
+    color: #9a94ac;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   NAVIGATION LABEL
+   ========================================================= */
+
+.nav-label {
+    padding: 0 12px;
+
+    margin-bottom: 9px;
+
+    color: #aaa4bc;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.sidebar nav {
+    gap: 5px;
+}
+
+.sidebar nav a {
+    min-height: 44px;
+
+    padding: 10px 12px;
+
+    border-radius: 12px;
+
+    color: #777187;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.sidebar nav a:hover {
+    background: rgba(255, 255, 255, 0.7);
+
+    color: #51466e;
+
+    transform: translateX(2px);
+}
+
+.sidebar nav a.active {
+    background: #ffffff;
+
+    color: #5f53b9;
+
+    box-shadow:
+        0 6px 18px
+        rgba(93, 81, 170, 0.08);
+
+    border: 1px solid #ece8f8;
+}
+
+.nav-icon {
+    color: #a39cae;
+
     font-size: 15px;
+}
+
+.sidebar nav a.active .nav-icon {
+    color: #7668d8;
+}
+
+.sidebar nav a:hover .nav-icon {
+    color: #7668d8;
+}
+
+
+/* =========================================================
+   SIDEBAR FOOTER
+   ========================================================= */
+
+.sidebar-footer {
+    border-top: none;
+
+    padding-top: 14px;
+}
+
+
+/* =========================================================
+   SYSTEM STATUS
+   ========================================================= */
+
+.system-indicator {
+    padding: 12px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.62);
+
+    border: 1px solid rgba(225, 220, 240, 0.8);
+
+    margin-bottom: 10px;
+}
+
+.system-indicator strong {
+    color: #4a4557;
+
+    font-size: 10.5px;
+}
+
+.system-indicator div span {
+    color: #9a94a7;
+
+    font-size: 9.5px;
+}
+
+.system-dot {
+    box-shadow:
+        0 0 0 4px
+        rgba(34, 197, 94, 0.10);
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.sidebar-profile {
+    padding: 11px 12px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.7);
+
+    border: 1px solid #eae5f4;
+}
+
+.profile-avatar {
+    width: 34px;
+    height: 34px;
+
+    background: #ece7fa;
+
+    border: none;
+
+    color: #695cb8;
+
+    font-size: 10px;
+}
+
+.profile-info strong {
+    color: #45404f;
+
+    font-size: 11px;
+}
+
+.profile-info span {
+    color: #9a94a7;
+
+    font-size: 9.5px;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main-content {
+    padding: 28px 34px 44px;
+
+    max-width: none;
+
+    background: var(--hr-bg);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.header,
+.reports-header {
+    margin-bottom: 24px;
+}
+
+.header h1,
+.reports-header h1,
+.settings-header h1 {
+    color: #262431;
+
+    font-size: 27px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.7px;
+}
+
+.header p,
+.reports-header p,
+.settings-header p {
+    color: #9293a0;
+
+    font-size: 13px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTONS
+   ========================================================= */
+
+.add-btn,
+.submit-btn {
+    background: #7667d8;
+
+    border-radius: 11px;
+
+    box-shadow:
+        0 5px 16px
+        rgba(118, 103, 216, 0.18);
+}
+
+.add-btn {
+    padding: 10px 16px;
+
+    font-size: 13px;
+}
+
+.add-btn:hover,
+.submit-btn:hover {
+    background: #6758c8;
+}
+
+
+/* =========================================================
+   DASHBOARD STAT CARDS
+   ========================================================= */
+
+.stats {
+    gap: 16px !important;
+
+    margin-bottom: 18px !important;
+}
+
+.card {
+    border: 1px solid var(--hr-border);
+
+    border-radius: 16px;
+
+    box-shadow: var(--hr-shadow);
+
+    background: var(--hr-card);
+
+    padding: 20px 20px;
+}
+
+.card:hover {
+    border-color: #e4e1ec;
+
+    box-shadow:
+        0 10px 28px
+        rgba(42, 38, 80, 0.08);
+
+    transform: translateY(-2px);
+}
+
+.card h3 {
+    color: #90909c;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #24222c;
+
+    font-size: 27px;
+
+    font-weight: 750;
+}
+
+.stat-meta {
+    color: #aaaab3;
+
+    font-size: 10.5px;
+
+    margin-top: 7px;
+}
+
+
+/* remove old left blue accent */
+
+.stats .card::before {
+    display: none;
+}
+
+
+/* =========================================================
+   DASHBOARD PANELS
+   ========================================================= */
+
+.dashboard-bottom {
+    gap: 16px;
+}
+
+.dashboard-panel {
+    border: 1px solid var(--hr-border);
+
+    border-radius: 16px;
+
+    box-shadow: var(--hr-shadow);
+
+    background: #ffffff;
+
+    padding: 20px;
+}
+
+.panel-header {
+    border-bottom: 1px solid #f1f1f5;
+
+    padding-bottom: 14px;
+}
+
+.panel-header h2 {
+    color: #2d2a36;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+.panel-header p {
+    color: #9a9aa5;
+
+    font-size: 11.5px;
+}
+
+.view-all-btn {
+    border: 1px solid #ecebf0;
+
+    background: #faf9fd;
+
+    color: #6d6879;
+
+    border-radius: 9px;
+
+    font-size: 11.5px;
+}
+
+.view-all-btn:hover {
+    background: #f3f0fb;
+
+    border-color: #e5e0f3;
+}
+
+
+/* =========================================================
+   EMPLOYEE SECTION / DEPARTMENTS
+   ========================================================= */
+
+.employee-section {
+    border: 1px solid var(--hr-border);
+
+    border-radius: 16px;
+
+    box-shadow: var(--hr-shadow);
+
+    background: #ffffff;
+
+    padding: 22px;
+}
+
+.section-header {
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    color: #292731;
+
+    font-size: 21px;
+
+    font-weight: 720;
+}
+
+.section-subtitle {
+    color: #9797a3;
+}
+
+.section-header input {
+    border: 1px solid #e6e5eb;
+
+    background: #fafafd;
+
+    border-radius: 10px;
+
+    padding: 10px 13px;
+
+    box-shadow: none;
+}
+
+.section-header input:focus {
+    border-color: #bdb4ea;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(118, 103, 216, 0.08);
+}
+
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+thead {
+    background: #fafafd;
+}
+
+th {
+    border-color: #eeeeF3;
+
+    color: #9a9aa5;
+}
+
+td {
+    border-color: #f1f1f4;
+
+    color: #55515d;
+}
+
+tbody tr:hover {
+    background: #fbfaff;
+}
+
+
+/* =========================================================
+   REPORTS
+   ========================================================= */
+
+.report-stat-card,
+.report-panel,
+.settings-card {
+    border: 1px solid var(--hr-border);
+
+    border-radius: 16px;
+
+    box-shadow: var(--hr-shadow);
+
+    background: #ffffff;
+}
+
+.report-stat-card {
+    min-height: 125px;
+
+    padding: 20px;
+}
+
+.report-stat-label {
+    color: #9797a2;
+}
+
+.report-stat-card strong {
+    color: #292631;
+
+    font-size: 25px;
+}
+
+.report-stat-card small {
+    color: #aaaab2;
+}
+
+.report-panel {
+    padding: 21px;
+}
+
+.report-panel-header {
+    border-bottom-color: #f0eff4;
+}
+
+.report-panel-header h2 {
+    color: #2c2934;
+}
+
+.report-panel-header p {
+    color: #9696a1;
+}
+
+.report-badge {
+    background: #eff9f5;
+
+    border-color: #dcefe7;
+
+    color: #4a9d83;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+.settings-card {
+    padding: 20px;
+
+    margin-bottom: 12px;
+}
+
+.settings-card h3 {
+    color: #2d2a34;
+}
+
+.settings-card p {
+    color: #9999a3;
+}
+
+.settings-tag {
+    border-radius: 9px;
+
+    background: #f2f0f8;
+
+    color: #766e8d;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal {
+    background: rgba(47, 42, 65, 0.32);
+
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    border: 1px solid #eae8f0;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(47, 42, 65, 0.20);
+}
+
+.modal-header {
+    border-bottom-color: #f0eff4;
+}
+
+.form-group input,
+.form-group select {
+    border-radius: 10px;
+
+    border-color: #e5e3ea;
+
+    background: #fafafd;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #bcb2ea;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(118, 103, 216, 0.08);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 205px;
+        min-width: 205px;
+    }
+
+    .main-content {
+        padding: 24px;
+    }
+}
+/* =========================================================
+   PHASE 1B — CONTRAST & DEPTH TUNING
+   ========================================================= */
+
+:root {
+    --hr-bg: #eef0f7;
+    --hr-sidebar: #e9e5f5;
+    --hr-card: #ffffff;
+    --hr-border: #dfe2eb;
+    --hr-text: #181725;
+    --hr-muted: #77798a;
+}
+
+
+/* PAGE BACKGROUND */
+
+body,
+.app,
+.main-content {
+    background: #eef0f7;
+}
+
+
+/* SIDEBAR — stronger lavender */
+
+.sidebar {
+    background:
+        linear-gradient(
+            180deg,
+            #e9e4f6 0%,
+            #e3dff1 100%
+        );
+
+    border-right: 1px solid #d7d1e7;
+}
+
+
+/* BRAND */
+
+.brand-info h2 {
+    color: #211e31;
+}
+
+.brand-info span {
+    color: #817b92;
+}
+
+
+/* NAVIGATION */
+
+.nav-label {
+    color: #8b849e;
+}
+
+.sidebar nav a {
+    color: #5f596e;
+}
+
+.sidebar nav a:hover {
+    background: rgba(255,255,255,0.58);
+    color: #342e4b;
+}
+
+.sidebar nav a.active {
+    background: #ffffff;
+
+    color: #5f50c6;
+
+    border: 1px solid #dcd6ed;
+
+    box-shadow:
+        0 7px 20px rgba(64, 52, 110, 0.10);
+}
+
+.nav-icon {
+    color: #817a93;
+}
+
+
+/* MAIN HEADINGS */
+
+.header h1,
+.reports-header h1,
+.settings-header h1,
+.section-header h2 {
+    color: #181622;
+}
+
+.header p,
+.reports-header p,
+.settings-header p,
+.section-subtitle {
+    color: #77798a;
+}
+
+
+/* KPI CARDS */
+
+.card {
+    border: 1px solid #dfe1e9;
+
+    box-shadow:
+        0 5px 18px rgba(39, 38, 60, 0.07);
+}
+
+.card h3 {
+    color: #747687;
+}
+
+.card p {
+    color: #17151f;
+}
+
+.stat-meta {
+    color: #858797;
+}
+
+
+/* MAIN PANELS */
+
+.dashboard-panel,
+.employee-section,
+.report-panel,
+.report-stat-card,
+.settings-card {
+    border: 1px solid #dde0e9;
+
+    box-shadow:
+        0 7px 24px rgba(39, 38, 60, 0.07);
+}
+
+
+/* PANEL HEADINGS */
+
+.panel-header h2,
+.report-panel-header h2 {
+    color: #1e1c28;
+}
+
+.panel-header p,
+.report-panel-header p {
+    color: #7d7e8c;
+}
+
+
+/* EMPLOYEE ROWS */
+
+.employee-info strong,
+.department-name {
+    color: #1c1a23;
+}
+
+.employee-info span,
+.department-count {
+    color: #747687;
+}
+
+
+/* DEPARTMENT PROGRESS */
+
+.department-bar {
+    background: #dde1ea;
+}
+
+.department-bar-fill {
+    background:
+        linear-gradient(
+            90deg,
+            #6555d4,
+            #806fe4
+        );
+}
+
+
+/* SYSTEM CARD */
+
+.system-indicator,
+.sidebar-profile {
+    background: rgba(255,255,255,0.70);
+
+    border-color: #d9d3e6;
+}
+
+.system-indicator strong,
+.profile-info strong {
+    color: #3c3748;
+}
+
+
+/* TABLE */
+
+thead {
+    background: #f2f3f7;
+}
+
+th {
+    color: #6e7080;
+}
+
+td {
+    color: #44424e;
+}
+
+
+/* BUTTON */
+
+.add-btn,
+.submit-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #6958d7,
+            #7b69df
+        );
+
+    box-shadow:
+        0 7px 18px rgba(91, 72, 190, 0.22);
+}
+
+.add-btn:hover,
+.submit-btn:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #5c4bc9,
+            #6e5bd2
+        );
+}
+/* PHASE 1C — DARKER LAVENDER SIDEBAR */
+
+.sidebar {
+    background: linear-gradient(
+        180deg,
+        #ddd6f2 0%,
+        #d7d0ec 100%
+    );
+    
+    border-right: 1px solid #cbc3df;
+}
+/* =========================================================
+   PHASE 2 — DASHBOARD HEADER + KPI CARDS
+   ========================================================= */
+
+.modern-dashboard-header {
+    align-items: flex-start;
+}
+
+.dashboard-heading {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-kicker {
+    color: #6d5fd1;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.dashboard-heading h1 {
+    font-size: 30px;
+    margin: 0;
+    color: #181622;
+}
+
+.dashboard-heading p {
+    margin-top: 6px;
+    color: #77798a;
+}
+
+.dashboard-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-date {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    padding: 9px 13px;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    border: 1px solid #d9dce6;
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 14px rgba(39, 38, 60, 0.05);
+}
+
+.header-date strong {
+    color: #2e2a38;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.header-date span {
+    color: #8b8997;
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   MODERN KPI CARDS
+   ========================================================= */
+
+.modern-stat-card {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    min-height: 122px;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #dcdfe8;
+
+    box-shadow:
+        0 6px 20px rgba(39, 38, 60, 0.07);
+}
+
+.modern-stat-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 28px rgba(39, 38, 60, 0.10);
+}
+
+
+/* ICON BOXES */
+
+.stat-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.stat-icon.purple {
+    background: #eee9ff;
+    color: #705fd6;
+}
+
+.stat-icon.cyan {
+    background: #e4f7fa;
+    color: #2baabd;
+}
+
+.stat-icon.green {
+    background: #e4f6ed;
+    color: #3ca77e;
+}
+
+.stat-icon.orange {
+    background: #fff0df;
+    color: #dc9841;
+}
+
+
+/* KPI CONTENT */
+
+.stat-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.stat-label {
+    display: block;
+
+    color: #77798a;
+
+    font-size: 11.5px;
+    font-weight: 600;
+
+    margin-bottom: 7px;
+}
+
+.stat-value-row {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.modern-stat-card .stat-value-row p {
+    margin: 0;
+
+    color: #17151f;
+
+    font-size: 27px;
+    font-weight: 750;
+
+    line-height: 1.1;
+}
+
+
+/* TREND BADGES */
+
+.stat-trend {
+    padding: 4px 7px;
+
+    border-radius: 8px;
+
+    font-size: 9.5px;
+    font-weight: 700;
+}
+
+.stat-trend.positive {
+    background: #e8f7ef;
+    color: #3b9d76;
+}
+
+.stat-trend.neutral {
+    background: #efedf7;
+    color: #726c82;
+}
+
+
+/* SMALL TEXT */
+
+.modern-stat-card .stat-meta {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #8b8d9b;
+
+    font-size: 10.5px;
+}
+/* =========================================================
+   PHASE 3 — DASHBOARD ANALYTICS
+   ========================================================= */
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-top: 18px;
+    margin-bottom: 30px;
+}
+
+.analytics-card {
+    background: #ffffff;
+    border: 1px solid #dde0e9;
+    border-radius: 16px;
+    padding: 20px;
+
+    box-shadow:
+        0 7px 24px rgba(39, 38, 60, 0.07);
+}
+
+.analytics-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.analytics-header h2 {
+    margin: 0;
+    color: #1e1c28;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.analytics-header p {
+    margin: 5px 0 0;
+    color: #858797;
+    font-size: 11px;
+}
+
+.analytics-period {
+    background: #f3f1fa;
+    border: 1px solid #e5e1f1;
+    border-radius: 9px;
+    padding: 7px 10px;
+
+    color: #69627a;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* ATTENDANCE SUMMARY */
+
+.attendance-summary {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 14px;
+}
+
+.attendance-summary > div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #77798a;
+    font-size: 10.5px;
+}
+
+.attendance-summary strong {
+    color: #24212c;
+    margin-left: 2px;
+}
+
+.attendance-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.attendance-dot.present {
+    background: #7564d8;
+}
+
+.attendance-dot.remote {
+    background: #50b8c5;
+}
+
+.attendance-dot.absent {
+    background: #e4a251;
+}
+
+
+/* CHART */
+
+.chart-area {
+    position: relative;
+    height: 185px;
+    padding-bottom: 25px;
+    overflow: hidden;
+}
+
+.chart-grid-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #eceef3;
+}
+
+.chart-grid-line.line-1 {
+    top: 25%;
+}
+
+.chart-grid-line.line-2 {
+    top: 50%;
+}
+
+.chart-grid-line.line-3 {
+    top: 75%;
+}
+
+.attendance-chart {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 155px;
+
+    overflow: visible;
+}
+
+.chart-line {
+    fill: none;
+    stroke: #7564d8;
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+.chart-fill {
+    fill: url(#attendanceGradient);
+}
+
+.chart-days {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: space-between;
+
+    color: #9293a0;
+    font-size: 9.5px;
+}
+
+
+/* SATISFACTION */
+
+.satisfaction-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.satisfaction-circle {
+    width: 145px;
+    height: 145px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        conic-gradient(
+            #7564d8 0deg 302deg,
+            #ebe8f5 302deg 360deg
+        );
+
+    margin: 3px 0 22px;
+}
+
+.satisfaction-inner {
+    width: 108px;
+    height: 108px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.satisfaction-inner strong {
+    color: #201d29;
+    font-size: 25px;
+}
+
+.satisfaction-inner span {
+    margin-top: 3px;
+
+    color: #898997;
+    font-size: 10px;
+}
+
+.satisfaction-details {
+    width: 100%;
+}
+
+.satisfaction-details > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 9px 0;
+
+    border-top: 1px solid #eceef3;
+}
+
+.satisfaction-details span {
+    color: #77798a;
+    font-size: 10.5px;
+}
+
+.satisfaction-details strong {
+    color: #292631;
+    font-size: 11px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   PHASE 4 — WORKING FORMAT + EMPLOYEE STATUS
+   ========================================================= */
+
+.workforce-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 18px;
+    margin-bottom: 30px;
+}
+
+.workforce-card {
+    background: #ffffff;
+    border: 1px solid #dde0e9;
+    border-radius: 16px;
+    padding: 20px;
+
+    box-shadow:
+        0 7px 24px rgba(39, 38, 60, 0.07);
+}
+
+.workforce-header {
+    margin-bottom: 20px;
+}
+
+.workforce-header h2 {
+    margin: 0;
+    color: #1e1c28;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.workforce-header p {
+    margin: 5px 0 0;
+    color: #858797;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   WORKING FORMAT
+   ========================================================= */
+
+.working-format-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 30px;
+    min-height: 190px;
+}
+
+.format-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.format-circle {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            #7564d8 0% 50%,
+            #54b9c5 50% 75%,
+            #e5a14b 75% 100%
+        );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.format-inner {
+    width: 108px;
+    height: 108px;
+
+    border-radius: 50%;
+    background: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.format-inner strong {
+    color: #211e2a;
+    font-size: 27px;
+    line-height: 1;
+}
+
+.format-inner span {
+    margin-top: 6px;
+    color: #898997;
+    font-size: 10px;
+}
+
+.format-legend {
+    min-width: 170px;
+}
+
+.format-legend > div {
+    display: grid;
+    grid-template-columns: 10px 1fr auto;
+    align-items: center;
+    gap: 8px;
+
+    padding: 11px 0;
+
+    border-bottom: 1px solid #eceef3;
+}
+
+.format-legend > div:last-child {
+    border-bottom: none;
+}
+
+.format-legend span {
+    color: #747685;
+    font-size: 11px;
+}
+
+.format-legend strong {
+    color: #292631;
+    font-size: 11px;
+}
+
+.format-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.format-dot.office {
+    background: #7564d8;
+}
+
+.format-dot.remote {
+    background: #54b9c5;
+}
+
+.format-dot.hybrid {
+    background: #e5a14b;
+}
+
+
+/* =========================================================
+   EMPLOYEE STATUS
+   ========================================================= */
+
+.status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    padding-top: 4px;
+}
+
+.status-row {
+    width: 100%;
+}
+
+.status-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 7px;
+}
+
+.status-info span {
+    color: #666877;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-info strong {
+    color: #28252f;
+    font-size: 11px;
+}
+
+.status-progress {
+    width: 100%;
+    height: 7px;
+
+    background: #eceef3;
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.status-progress-fill {
+    height: 100%;
+    border-radius: 20px;
+}
+
+.active-status {
+    width: 100%;
+    background: #7564d8;
+}
+
+.new-status {
+    width: 50%;
+    background: #54b9c5;
+}
+
+.leave-status {
+    width: 0%;
+    background: #e5a14b;
+}
+
+.resigned-status {
+    width: 0%;
+    background: #df7181;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .workforce-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .working-format-content {
+        justify-content: center;
+    }
+}
+/* =========================================================
+   PHASE 5 — PROFESSIONAL EMPLOYEE DIRECTORY
+   ========================================================= */
+
+.modern-employees-page {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.employees-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.employees-page-header h1 {
+    margin: 3px 0 5px;
+    color: #181622;
+    font-size: 30px;
+    font-weight: 750;
+}
+
+.employees-page-header p {
+    margin: 0;
+    color: #77798a;
+    font-size: 12px;
+}
+
+
+/* DIRECTORY CARD */
+
+.employee-directory-card {
+    background: #ffffff;
+    border: 1px solid #dde0e9;
+    border-radius: 18px;
+    overflow: hidden;
+
+    box-shadow:
+        0 7px 24px rgba(39, 38, 60, 0.07);
+}
+
+.employee-directory-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 20px 22px;
+
+    border-bottom: 1px solid #e8e9ef;
+}
+
+.directory-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.directory-title h2 {
+    margin: 0;
+    color: #201d29;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.employee-count-badge {
+    padding: 5px 9px;
+
+    background: #f0edf9;
+    color: #7167a0;
+
+    border-radius: 20px;
+
+    font-size: 9.5px;
+    font-weight: 700;
+}
+
+
+/* SEARCH + FILTERS */
+
+.directory-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.employee-search-box {
+    width: 230px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0 12px;
+
+    background: #f7f7fa;
+
+    border: 1px solid #e0e2e9;
+    border-radius: 10px;
+}
+
+.employee-search-box span {
+    color: #898b98;
+    font-size: 17px;
+}
+
+.employee-search-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #34313d;
+    font-size: 11px;
+}
+
+.employee-search-box input::placeholder {
+    color: #9b9ca7;
+}
+
+.employee-filter {
+    height: 38px;
+
+    padding: 0 30px 0 11px;
+
+    background: #ffffff;
+
+    border: 1px solid #dfe1e8;
+    border-radius: 10px;
+
+    color: #686a78;
+
+    font-size: 10.5px;
+    font-weight: 600;
+
+    outline: none;
     cursor: pointer;
 }
 
-.submit-btn:hover {
-    background: #1d4ed8;
+
+/* TABLE */
+
+.employee-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.modern-employee-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modern-employee-table thead {
+    background: #f7f7fa;
+}
+
+.modern-employee-table th {
+    padding: 13px 18px;
+
+    color: #898a97;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #e5e7ed;
+}
+
+.modern-employee-table td {
+    padding: 16px 18px;
+
+    color: #494650;
+
+    font-size: 11px;
+
+    border-bottom: 1px solid #eceef3;
+}
+
+.modern-employee-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.modern-employee-table tbody tr:hover {
+    background: #faf9fd;
+}
+
+.modern-employee-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* STATUS */
+
+.modern-employee-table .status-active {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 5px 9px;
+
+    background: #e8f7ef;
+    color: #3d9b76;
+
+    border-radius: 20px;
+
+    font-size: 9.5px;
+    font-weight: 700;
+}
+
+.modern-employee-table .status-inactive {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    background: #fbecef;
+    color: #c46572;
+
+    border-radius: 20px;
+
+    font-size: 9.5px;
+    font-weight: 700;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+
+    .employee-directory-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .directory-controls {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .employee-search-box {
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .employees-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .directory-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .employee-search-box,
+    .employee-filter {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   PHASE 6 — PROFESSIONAL DEPARTMENTS PAGE
+   ========================================================= */
+
+.modern-departments-page {
+    padding: 0;
+    background: transparent;
+}
+
+.departments-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.departments-page-header h1 {
+    margin: 3px 0 5px;
+    color: #181622;
+    font-size: 30px;
+    font-weight: 750;
+}
+
+.departments-page-header p {
+    margin: 0;
+    color: #77798a;
+    font-size: 12px;
+}
+
+.department-header-badge {
+    padding: 9px 13px;
+    background: #f0edf9;
+    color: #7167a0;
+    border: 1px solid #ddd7ee;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.department-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.department-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #dde0e9;
+    border-radius: 16px;
+    box-shadow: 0 7px 22px rgba(39, 38, 60, 0.06);
+}
+
+.department-summary-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0edf9;
+    color: #7167a0;
+    border-radius: 13px;
+    font-size: 18px;
+}
+
+.department-summary-card div:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.department-summary-card span {
+    color: #858795;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.department-summary-card strong {
+    margin: 3px 0;
+    color: #211e2a;
+    font-size: 24px;
+}
+
+.department-summary-card small {
+    color: #a0a1ac;
+    font-size: 9.5px;
+}
+
+.department-directory-card {
+    background: #ffffff;
+    border: 1px solid #dde0e9;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 7px 24px rgba(39, 38, 60, 0.07);
+}
+
+.department-directory-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 22px;
+    border-bottom: 1px solid #e8e9ef;
+}
+
+.department-directory-header h2 {
+    margin: 0 0 4px;
+    color: #201d29;
+    font-size: 15px;
+}
+
+.department-directory-header p {
+    margin: 0;
+    color: #8d8f9d;
+    font-size: 10px;
+}
+
+.department-live-tag {
+    padding: 6px 10px;
+    background: #eaf7ef;
+    color: #3f9c76;
+    border-radius: 20px;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.modern-department-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 20px;
+}
+
+.modern-department-grid .card {
+    padding: 18px;
+    background: #fafafd;
+    border: 1px solid #e6e7ed;
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+.modern-department-grid .card:hover {
+    background: #f7f5fc;
+    border-color: #d8d2eb;
+}
+
+.department-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.department-card-top h3 {
+    margin: 0;
+    color: #282532;
+    font-size: 13px;
+}
+
+.department-card-top span {
+    padding: 4px 8px;
+    background: #efedf8;
+    color: #7167a0;
+    border-radius: 12px;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.modern-department-grid .card p {
+    margin: 0 0 7px;
+    color: #4c4954;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.department-card-meta {
+    color: #92939e;
+    font-size: 9.5px;
+}
+
+@media (max-width: 900px) {
+    .department-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modern-department-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .departments-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+/* =========================================================
+   PHASE 7 — PROFESSIONAL REPORTS PAGE
+   ========================================================= */
+
+.modern-reports-page {
+    padding: 0;
+    background: transparent;
+}
+
+.reports-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.reports-page-header h1 {
+    margin: 3px 0 5px;
+    color: #181622;
+    font-size: 30px;
+    font-weight: 750;
+}
+
+.reports-page-header p {
+    margin: 0;
+    color: #77798a;
+    font-size: 12px;
+}
+
+.modern-report-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.modern-report-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid #dde0e9;
+    border-radius: 16px;
+    box-shadow: 0 7px 22px rgba(39, 38, 60, 0.06);
+}
+
+.report-stat-icon {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #f0edf9;
+    color: #7167a0;
+    border-radius: 12px;
+    font-size: 17px;
+}
+
+.modern-report-stat-card > div:last-child {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.modern-report-stat-card span {
+    color: #858795;
+    font-size: 9.5px;
+    font-weight: 600;
+}
+
+.modern-report-stat-card strong {
+    margin: 3px 0;
+    color: #211e2a;
+    font-size: 20px;
+    line-height: 1.2;
+}
+
+.modern-report-stat-card small {
+    color: #a0a1ac;
+    font-size: 9px;
+}
+
+.modern-reports-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.modern-report-panel {
+    background: #ffffff;
+    border: 1px solid #dde0e9;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 7px 24px rgba(39, 38, 60, 0.07);
+}
+
+.modern-report-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #e8e9ef;
+}
+
+.modern-report-panel-header h2 {
+    margin: 0 0 4px;
+    color: #201d29;
+    font-size: 14px;
+}
+
+.modern-report-panel-header p {
+    margin: 0;
+    color: #8d8f9d;
+    font-size: 9.5px;
+}
+
+/* Department distribution */
+
+#reportsDepartmentList {
+    padding: 18px 20px;
+}
+
+#reportsDepartmentList .report-department-row {
+    padding: 13px 0;
+    border-bottom: 1px solid #eceef3;
+}
+
+#reportsDepartmentList .report-department-row:last-child {
+    border-bottom: none;
+}
+
+.report-department-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.report-department-top strong {
+    color: #3f3b47;
+    font-size: 11px;
+}
+
+.report-department-top span {
+    color: #8d8f9b;
+    font-size: 9.5px;
+}
+
+#reportsDepartmentList small {
+    display: block;
+    margin-top: 6px;
+    color: #9698a3;
+    font-size: 8.5px;
+}
+
+/* Compensation */
+
+.modern-salary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 18px;
+}
+
+.modern-salary-metric {
+    padding: 16px;
+    background: #fafafd;
+    border: 1px solid #e7e7ee;
+    border-radius: 13px;
+}
+
+.modern-salary-metric span {
+    display: block;
+    margin-bottom: 6px;
+    color: #898b98;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.modern-salary-metric strong {
+    color: #292632;
+    font-size: 17px;
+}
+
+/* Workforce table */
+
+.workforce-summary-panel {
+    margin-bottom: 20px;
+}
+
+.modern-report-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modern-report-table thead {
+    background: #f7f7fa;
+}
+
+.modern-report-table th {
+    padding: 13px 18px;
+    color: #898a97;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7ed;
+}
+
+.modern-report-table td {
+    padding: 15px 18px;
+    color: #494650;
+    font-size: 10.5px;
+    border-bottom: 1px solid #eceef3;
+}
+
+.modern-report-table tbody tr:hover {
+    background: #faf9fd;
+}
+
+.modern-report-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.modern-report-table .report-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 9px;
+    background: #e8f7ef;
+    color: #3d9b76;
+    border-radius: 20px;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+    .modern-report-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .modern-reports-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .reports-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .modern-report-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .modern-salary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   PHASE 8 — PROFESSIONAL SETTINGS PAGE
+   ========================================================= */
+
+.modern-settings-page {
+    padding: 0;
+    background: transparent;
+}
+
+.settings-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.settings-page-header h1 {
+    margin: 3px 0 5px;
+    color: #181622;
+    font-size: 30px;
+    font-weight: 750;
+}
+
+.settings-page-header p {
+    margin: 0;
+    color: #77798a;
+    font-size: 12px;
+}
+
+.settings-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.modern-settings-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 19px;
+    background: #ffffff;
+    border: 1px solid #dde0e9;
+    border-radius: 16px;
+    box-shadow: 0 7px 22px rgba(39, 38, 60, 0.06);
+}
+
+.settings-card-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #f0edf9;
+    color: #7167a0;
+    border-radius: 13px;
+    font-size: 18px;
+}
+
+.settings-card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.settings-card-content span {
+    display: block;
+    margin-bottom: 4px;
+    color: #9899a5;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+}
+
+.settings-card-content h3 {
+    margin: 0 0 4px;
+    color: #282531;
+    font-size: 13px;
+}
+
+.settings-card-content p {
+    margin: 0;
+    color: #8b8d99;
+    font-size: 9.5px;
+}
+
+.modern-settings-status {
+    padding: 6px 9px;
+    background: #f0edf9;
+    color: #7167a0;
+    border-radius: 20px;
+    font-size: 8.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.modern-settings-status.success {
+    background: #e8f7ef;
+    color: #3d9b76;
+}
+
+.settings-system-panel {
+    background: #ffffff;
+    border: 1px solid #dde0e9;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 7px 24px rgba(39, 38, 60, 0.07);
+}
+
+.settings-panel-header {
+    padding: 19px 21px;
+    border-bottom: 1px solid #e8e9ef;
+}
+
+.settings-panel-header h2 {
+    margin: 0 0 4px;
+    color: #201d29;
+    font-size: 15px;
+}
+
+.settings-panel-header p {
+    margin: 0;
+    color: #8d8f9d;
+    font-size: 9.5px;
+}
+
+.settings-info-list {
+    padding: 0 21px;
+}
+
+.settings-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 17px 0;
+    border-bottom: 1px solid #eceef3;
+}
+
+.settings-info-row:last-child {
+    border-bottom: none;
+}
+
+.settings-info-row > div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.settings-info-row strong {
+    color: #34313c;
+    font-size: 11px;
+}
+
+.settings-info-row span {
+    color: #92939e;
+    font-size: 9.5px;
+}
+
+.settings-info-value {
+    padding: 6px 10px;
+    background: #f7f5fc;
+    color: #7167a0 !important;
+    border-radius: 20px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+@media (max-width: 1000px) {
+    .settings-overview-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .settings-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .modern-settings-card {
+        align-items: flex-start;
+    }
+
+    .settings-info-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+/* =========================================================
+   FINAL THEME — DEEP LAVENDER / REDUCED BRIGHTNESS
+   ========================================================= */
+
+:root {
+    --hr-bg: #dfe1eb;
+    --hr-card: #f4f3f8;
+    --hr-border: #cbcbd8;
+    --hr-text: #211f2b;
+    --hr-muted: #686979;
+}
+
+/* MAIN WORKSPACE */
+
+html,
+body,
+.app,
+.main-content {
+    background: #dfe1eb !important;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    background: linear-gradient(
+        180deg,
+        #c9c1df 0%,
+        #beb5d7 100%
+    ) !important;
+
+    border-right: 1px solid #afa6c9 !important;
+}
+
+.brand-info h2 {
+    color: #242033 !important;
+}
+
+.brand-info span,
+.nav-label {
+    color: #716a82 !important;
+}
+
+.sidebar nav a {
+    color: #4f485f !important;
+}
+
+.sidebar nav a:hover {
+    background: rgba(255, 255, 255, 0.40) !important;
+    color: #302941 !important;
+}
+
+.sidebar nav a.active {
+    background: #ebe8f2 !important;
+    color: #5948bd !important;
+    border-color: #bdb4d2 !important;
+    box-shadow: 0 5px 16px rgba(55, 45, 90, 0.10) !important;
+}
+
+.nav-icon {
+    color: #6f6681 !important;
+}
+
+.sidebar nav a.active .nav-icon {
+    color: #6654ce !important;
+}
+
+/* SIDEBAR BOTTOM CARDS */
+
+.system-indicator,
+.sidebar-profile {
+    background: rgba(239, 236, 246, 0.82) !important;
+    border-color: #b9b1cb !important;
+}
+
+.system-indicator strong,
+.profile-info strong {
+    color: #393344 !important;
+}
+
+.system-indicator div span,
+.profile-info span {
+    color: #777080 !important;
+}
+
+.profile-avatar {
+    background: #d9d2ea !important;
+    color: #5e50ae !important;
+}
+
+/* ALL MAJOR CARDS / PANELS */
+
+.card,
+.dashboard-panel,
+.employee-section,
+.employee-directory-card,
+.department-summary-card,
+.department-directory-card,
+.modern-report-stat-card,
+.modern-report-panel,
+.settings-system-panel,
+.modern-settings-card {
+    background: #f4f3f8 !important;
+    border-color: #cacbd6 !important;
+    box-shadow: 0 7px 22px rgba(42, 39, 63, 0.09) !important;
+}
+
+/* INNER CARDS */
+
+.modern-department-grid .card,
+.modern-salary-metric {
+    background: #e9e8ef !important;
+    border-color: #c9c8d3 !important;
+}
+
+/* HEADINGS */
+
+.header h1,
+.employees-page-header h1,
+.departments-page-header h1,
+.reports-page-header h1,
+.settings-page-header h1,
+.section-header h2 {
+    color: #17151f !important;
+}
+
+/* SUBTEXT */
+
+.header p,
+.employees-page-header p,
+.departments-page-header p,
+.reports-page-header p,
+.settings-page-header p,
+.section-subtitle {
+    color: #666776 !important;
+}
+
+/* TABLE HEADERS */
+
+thead,
+.modern-employee-table thead,
+.modern-report-table thead {
+    background: #e4e4eb !important;
+}
+
+.modern-employee-table th,
+.modern-report-table th,
+th {
+    color: #696979 !important;
+    border-color: #cacbd4 !important;
+}
+
+/* TABLE BODY */
+
+.modern-employee-table td,
+.modern-report-table td,
+td {
+    color: #3e3b47 !important;
+    border-color: #d2d2db !important;
+}
+
+tbody tr:hover,
+.modern-employee-table tbody tr:hover,
+.modern-report-table tbody tr:hover {
+    background: #eae8f0 !important;
+}
+
+/* EMPLOYEE SEARCH + FILTERS */
+
+.employee-search-box {
+    background: #e8e7ed !important;
+    border-color: #c6c6d0 !important;
+}
+
+.employee-search-box input {
+    color: #33303b !important;
+}
+
+.employee-search-box input::placeholder {
+    color: #7e7d88 !important;
+}
+
+.employee-filter {
+    background: #e9e8ee !important;
+    border-color: #c5c5cf !important;
+    color: #55525f !important;
+}
+
+/* REPORT / DEPARTMENT HEADERS */
+
+.department-directory-header,
+.modern-report-panel-header,
+.settings-panel-header,
+.employee-directory-toolbar {
+    border-color: #ceced8 !important;
+}
+
+/* SETTINGS ROWS */
+
+.settings-info-row {
+    border-color: #d0d0d9 !important;
+}
+
+.settings-info-value {
+    background: #e2deed !important;
+    color: #6657a6 !important;
+}
+
+/* SMALL PURPLE BADGES */
+
+.employee-count-badge,
+.department-header-badge {
+    background: #ddd8ea !important;
+    color: #62559b !important;
+    border-color: #c6bfd9 !important;
+}
+
+/* DASHBOARD INNER ELEMENTS */
+
+.view-all-btn {
+    background: #e7e5ec !important;
+    border-color: #c7c6d0 !important;
+    color: #575361 !important;
+}
+
+.employee-department {
+    background: #e4e2e9 !important;
+    color: #575360 !important;
+}
+
+.employee-avatar,
+.department-summary-icon,
+.report-stat-icon,
+.settings-card-icon {
+    background: #ded9eb !important;
+    color: #6655ba !important;
+}
+
+/* MODAL */
+
+.modal {
+    background: rgba(29, 26, 39, 0.58) !important;
+}
+
+.modal-content {
+    background: #f0eff5 !important;
+    border-color: #c5c4cf !important;
+}
+
+.form-group input,
+.form-group select {
+    background: #e4e3e9 !important;
+    border-color: #c1c1cc !important;
+    color: #302e37 !important;
+}
+
+/* KEEP STATUS ELEMENTS CLEAR */
+
+.department-live-tag,
+.modern-settings-status.success,
+.status-active,
+.report-status {
+    background: #dceee5 !important;
+    color: #318261 !important;
+}
+
+/* SOFTER DIVIDERS */
+
+.panel-header,
+.department-directory-header,
+.modern-report-panel-header,
+.settings-panel-header,
+.employee-directory-toolbar {
+    border-bottom-color: #ceced7 !important;
 }
