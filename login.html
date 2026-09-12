@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EMS | Administrator Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(118, 103, 216, 0.20),
+                    transparent 34%
+                ),
+                linear-gradient(
+                    135deg,
+                    #c9c4db 0%,
+                    #d9dbe5 48%,
+                    #c5bed9 100%
+                );
+
+            color: #211f2b;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 920px;
+            min-height: 560px;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            overflow: hidden;
+
+            background: #f4f3f8;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+
+            box-shadow:
+                0 25px 70px rgba(47, 42, 65, 0.18);
+        }
+
+        /* LEFT */
+
+        .login-brand {
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            padding: 48px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #7565d4 0%,
+                    #5f51b7 100%
+                );
+
+            color: white;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            border-radius: 13px;
+
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .brand h2 {
+            font-size: 19px;
+        }
+
+        .brand span {
+            display: block;
+            margin-top: 2px;
+
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 10px;
+        }
+
+        .brand-content h1 {
+            max-width: 320px;
+
+            margin-bottom: 16px;
+
+            font-size: 37px;
+            line-height: 1.12;
+            letter-spacing: -1px;
+        }
+
+        .brand-content p {
+            max-width: 320px;
+
+            color: rgba(255, 255, 255, 0.72);
+
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .brand-footer {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 10px;
+        }
+
+        /* RIGHT */
+
+        .login-form-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 55px;
+        }
+
+        .login-form-wrapper {
+            width: 100%;
+            max-width: 330px;
+        }
+
+        .login-label {
+            display: inline-block;
+
+            margin-bottom: 9px;
+
+            color: #705fc8;
+
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .login-form-wrapper h2 {
+            margin-bottom: 7px;
+
+            color: #1d1a25;
+
+            font-size: 28px;
+            letter-spacing: -0.7px;
+        }
+
+        .login-subtitle {
+            margin-bottom: 30px;
+
+            color: #777483;
+
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #494551;
+
+            font-size: 11px;
+            font-weight: 650;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 45px;
+
+            padding: 0 14px;
+
+            outline: none;
+
+            background: #e8e7ed;
+            border: 1px solid #cac8d2;
+            border-radius: 11px;
+
+            color: #292631;
+            font-size: 12px;
+
+            transition: 0.2s ease;
+        }
+
+        .form-group input:focus {
+            background: #efedf4;
+            border-color: #8272d8;
+
+            box-shadow:
+                0 0 0 3px rgba(118, 103, 216, 0.11);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 65px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+            background: transparent;
+
+            color: #716a7d;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 46px;
+
+            margin-top: 5px;
+
+            border: none;
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7867d9,
+                    #6655c6
+                );
+
+            color: white;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 7px 18px rgba(103, 86, 197, 0.22);
+
+            transition: 0.2s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 10px 24px rgba(103, 86, 197, 0.28);
+        }
+
+        .login-error {
+            display: none;
+
+            margin-top: 13px;
+            padding: 10px 12px;
+
+            background: #f8e5e8;
+            border: 1px solid #eccbd0;
+            border-radius: 9px;
+
+            color: #b34f5c;
+
+            font-size: 10px;
+        }
+
+        .secure-message {
+            margin-top: 24px;
+
+            color: #93909c;
+
+            font-size: 9.5px;
+            text-align: center;
+        }
+
+        @media (max-width: 760px) {
+
+            .login-container {
+                max-width: 440px;
+                grid-template-columns: 1fr;
+            }
+
+            .login-brand {
+                min-height: 230px;
+                padding: 30px;
+            }
+
+            .brand-content h1 {
+                margin-top: 40px;
+                font-size: 27px;
+            }
+
+            .brand-footer {
+                display: none;
+            }
+
+            .login-form-area {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <section class="login-brand">
+
+            <div class="brand">
+                <div class="brand-logo">
+                    EM
+                </div>
+
+                <div>
+                    <h2>EMS</h2>
+                    <span>Workforce Suite</span>
+                </div>
+            </div>
+
+
+            <div class="brand-content">
+                <h1>
+                    Manage your workforce with confidence.
+                </h1>
+
+                <p>
+                    A centralized employee management platform
+                    for workforce administration, departments,
+                    analytics and organizational insights.
+                </p>
+            </div>
+
+
+            <div class="brand-footer">
+                Employee Management System
+            </div>
+
+        </section>
+
+
+        <section class="login-form-area">
+
+            <div class="login-form-wrapper">
+
+                <span class="login-label">
+                    ADMIN PORTAL
+                </span>
+
+                <h2>Welcome back</h2>
+
+                <p class="login-subtitle">
+                    Enter your administrator credentials to
+                    access the workforce dashboard.
+                </p>
+
+
+                <form id="loginForm">
+
+                    <div class="form-group">
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            placeholder="Enter username"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                id="showPassword"
+                            >
+                                SHOW
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="login-btn"
+                    >
+                        Sign in to Dashboard
+                    </button>
+
+
+                    <div
+                        class="login-error"
+                        id="loginError"
+                    >
+                        Invalid username or password.
+                    </div>
+
+                </form>
+
+
+                <p class="secure-message">
+                    🔒 Authorized administrator access only
+                </p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script>
+
+        const loginForm =
+            document.querySelector("#loginForm");
+
+        const username =
+            document.querySelector("#username");
+
+        const password =
+            document.querySelector("#password");
+
+        const loginError =
+            document.querySelector("#loginError");
+
+        const showPassword =
+            document.querySelector("#showPassword");
+
+
+        showPassword.addEventListener(
+            "click",
+            function () {
+
+                if (password.type === "password") {
+
+                    password.type = "text";
+                    showPassword.innerText = "HIDE";
+
+                } else {
+
+                    password.type = "password";
+                    showPassword.innerText = "SHOW";
+                }
+            }
+        );
+
+
+        loginForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                const enteredUsername =
+                    username.value.trim();
+
+                const enteredPassword =
+                    password.value;
+
+
+                if (
+                    enteredUsername === "admin" &&
+                    enteredPassword === "admin123"
+                ) {
+
+                    sessionStorage.setItem(
+                        "emsLoggedIn",
+                        "true"
+                    );
+
+                    window.location.href =
+                        "index.html";
+
+                } else {
+
+                    loginError.style.display =
+                        "block";
+                }
+            }
+        );
+
+    </script>
+
+</body>
+</html>
