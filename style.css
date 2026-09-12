@@ -4690,3 +4690,97 @@ tbody tr:hover,
 .employee-directory-toolbar {
     border-bottom-color: #ceced7 !important;
 }
+/* =========================================
+   EMPLOYEE PAGE HEIGHT BALANCE
+   ========================================= */
+
+.employee-directory-card,
+.employee-section {
+    min-height: 430px !important;
+}
+
+.modern-employee-table {
+    width: 100%;
+}
+
+.modern-employee-table tbody tr {
+    height: 72px;
+}
+
+/* =========================================
+   EMPLOYEE SUMMARY CARDS
+   ========================================= */
+
+.employee-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin: 20px 0 22px;
+}
+
+.employee-summary-card {
+    min-height: 105px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+
+    background: #f4f3f8;
+    border: 1px solid #cacbd6;
+    border-radius: 17px;
+
+    box-shadow: 0 7px 22px rgba(42, 39, 63, 0.07);
+}
+
+.employee-summary-icon {
+    width: 47px;
+    height: 47px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ded9eb;
+    border-radius: 13px;
+
+    color: #6655ba;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.employee-summary-card span {
+    display: block;
+    margin-bottom: 4px;
+
+    color: #777383;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.employee-summary-card strong {
+    display: block;
+
+    color: #211f2b;
+    font-size: 23px;
+    line-height: 1.1;
+}
+
+.employee-summary-card small {
+    display: block;
+    margin-top: 5px;
+
+    color: #9995a2;
+    font-size: 9px;
+}
+
+@media (max-width: 900px) {
+    .employee-summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Employee page spacing */
+.modern-employees-page {
+    padding: 24px 28px 32px !important;
+}

@@ -455,9 +455,19 @@
                 </form>
 
 
-                <p class="secure-message">
-                    🔒 Authorized administrator access only
-                </p>
+               <p class="secure-message">
+    New administrator?
+    <a
+        href="register.html"
+        style="
+            color:#6655c6;
+            font-weight:700;
+            text-decoration:none;
+        "
+    >
+        Create account
+    </a>
+</p>
 
             </div>
 
@@ -502,7 +512,7 @@
         );
 
 
-        loginForm.addEventListener(
+                loginForm.addEventListener(
             "submit",
             function (event) {
 
@@ -514,15 +524,33 @@
                 const enteredPassword =
                     password.value;
 
+                const admins =
+                    JSON.parse(
+                        localStorage.getItem("emsAdmins")
+                    ) || [];
 
-                if (
-                    enteredUsername === "admin" &&
-                    enteredPassword === "admin123"
-                ) {
+                const matchedAdmin =
+                    admins.find(
+                        admin =>
+                            admin.username === enteredUsername &&
+                            admin.password === enteredPassword
+                    );
+
+                if (matchedAdmin) {
 
                     sessionStorage.setItem(
                         "emsLoggedIn",
                         "true"
+                    );
+
+                    sessionStorage.setItem(
+                        "emsAdminName",
+                        matchedAdmin.fullName
+                    );
+
+                    sessionStorage.setItem(
+                        "emsAdminUsername",
+                        matchedAdmin.username
                     );
 
                     window.location.href =
