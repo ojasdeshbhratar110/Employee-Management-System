@@ -2,7 +2,7 @@ if (sessionStorage.getItem("emsLoggedIn") !== "true") {
     window.location.href = "login.html";
 }
 
-const API_URL = "http://localhost:8080/api/employees";
+const API_URL = "https://employee-management-system-puya.onrender.com/api/employees";
 
 
 const addButton = document.querySelector(".add-btn");
