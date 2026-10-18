@@ -459,24 +459,14 @@
                         class="login-error"
                         id="loginError"
                     >
-                        Invalid username or password.
+                        Unable to sign in.
                     </div>
 
                 </form>
 
 
                <p class="secure-message">
-    New administrator?
-    <a
-        href="register.html"
-        style="
-            color:#6655c6;
-            font-weight:700;
-            text-decoration:none;
-        "
-    >
-        Create account
-    </a>
+    Administrator account setup is restricted to the system owner.
 </p>
 
             </div>
@@ -503,6 +493,10 @@
         const showPassword =
             document.querySelector("#showPassword");
 
+        function showLoginError(message) {
+            loginError.textContent = message;
+            loginError.style.display = "block";
+        }
 
         showPassword.addEventListener(
             "click",
@@ -524,53 +518,73 @@
 
                 loginForm.addEventListener(
             "submit",
-            function (event) {
+                    async function (event) {
 
                 event.preventDefault();
 
-                const enteredUsername =
-                    username.value.trim();
+                loginError.style.display = "none";
 
-                const enteredPassword =
-                    password.value;
+                let csrfToken;
+                try {
+                    const csrfResponse = await fetch("/api/auth/csrf", {
+                        credentials: "same-origin"
+                    });
+                    if (!csrfResponse.ok) {
+                        showLoginError("Secure sign-in could not be initialized. Please try again later.");
+                        return;
+                    }
 
-                const admins =
-                    JSON.parse(
-                        localStorage.getItem("emsAdmins")
-                    ) || [];
-
-                const matchedAdmin =
-                    admins.find(
-                        admin =>
-                            admin.username === enteredUsername &&
-                            admin.password === enteredPassword
-                    );
-
-                if (matchedAdmin) {
-
-                    sessionStorage.setItem(
-                        "emsLoggedIn",
-                        "true"
-                    );
-
-                    sessionStorage.setItem(
-                        "emsAdminName",
-                        matchedAdmin.fullName
-                    );
-
-                    sessionStorage.setItem(
-                        "emsAdminUsername",
-                        matchedAdmin.username
-                    );
-
-                    window.location.href =
-                        "index.html";
-
-                } else {
-
-                    loginError.style.display =
-                        "block";
+                    const csrfCookie = document.cookie
+                        .split(";")
+                        .map(part => part.trim())
+                        .find(part => part.startsWith("XSRF-TOKEN="));
+                    csrfToken = csrfCookie
+                        ? decodeURIComponent(csrfCookie.substring("XSRF-TOKEN=".length))
+                        : "";
+                    if (!csrfToken) {
+                        showLoginError("Secure sign-in could not be initialized. Please try again later.");
+                        return;
+                    }
+                } catch (error) {
+                    showLoginError("Secure sign-in could not be initialized. Please try again later.");
+                    return;
                 }
+
+                let response;
+                try {
+                    response = await fetch("/api/auth/login", {
+                        method: "POST",
+                        credentials: "same-origin",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                            "X-XSRF-TOKEN": csrfToken
+                        },
+                        body: new URLSearchParams({
+                            username: username.value.trim(),
+                            password: password.value
+                        })
+                    });
+                } catch (error) {
+                    showLoginError("Unable to reach the sign-in service. Check your connection and try again.");
+                    return;
+                }
+
+                if (response.status === 401) {
+                    showLoginError("Invalid username or password.");
+                    return;
+                }
+
+                if (response.status === 429) {
+                    showLoginError("Too many sign-in attempts. Please wait before trying again.");
+                    return;
+                }
+
+                if (!response.ok) {
+                    showLoginError("Sign-in is temporarily unavailable. Please try again later.");
+                    return;
+                }
+
+                window.location.href = "index.html";
             }
         );
 
