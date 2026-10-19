@@ -1,8 +1,62 @@
-if (sessionStorage.getItem("emsLoggedIn") !== "true") {
-    window.location.href = "login.html";
+const API_URL = "/api/employees";
+
+function readCookie(name) {
+    const cookie = document.cookie
+        .split(";")
+        .map(function (part) { return part.trim(); })
+        .find(function (part) { return part.startsWith(name + "="); });
+
+    return cookie ? decodeURIComponent(cookie.substring(name.length + 1)) : "";
 }
 
-const API_URL = "https://employee-management-system-puya.onrender.com/api/employees";
+async function getCsrfToken() {
+    let token = readCookie("XSRF-TOKEN");
+    if (token) {
+        return token;
+    }
+
+    const response = await fetch("/api/auth/csrf", { credentials: "same-origin" });
+    if (!response.ok) {
+        throw new Error("Could not initialize request security.");
+    }
+
+    token = readCookie("XSRF-TOKEN");
+    if (!token) {
+        throw new Error("Security token was not provided.");
+    }
+
+    return token;
+}
+
+async function apiFetch(url, options) {
+    const requestOptions = { ...(options || {}), credentials: "same-origin" };
+    const method = (requestOptions.method || "GET").toUpperCase();
+
+    if (!["GET", "HEAD", "OPTIONS"].includes(method)) {
+        requestOptions.headers = new Headers(requestOptions.headers || {});
+        requestOptions.headers.set("X-XSRF-TOKEN", await getCsrfToken());
+    }
+
+    const response = await fetch(url, requestOptions);
+    if (response.status === 401) {
+        window.location.href = "login.html";
+        throw new Error("Your administrator session has expired.");
+    }
+
+    return response;
+}
+
+function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function (character) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[character];
+    });
+}
 
 
 const addButton = document.querySelector(".add-btn");
@@ -134,7 +188,7 @@ async function loadEmployees() {
     try {
 
         const response =
-            await fetch(API_URL);
+            await apiFetch(API_URL);
 
 
         if (!response.ok) {
@@ -224,24 +278,24 @@ async function loadEmployees() {
             <td>
                 <div class="employee-profile">
                     <div class="employee-avatar">
-                        ${initials}
+                        ${escapeHtml(initials)}
                     </div>
 
                     <div class="employee-info">
-                        <strong>${employee.name}</strong>
-                        <span>${employee.email}</span>
+                        <strong>${escapeHtml(employee.name)}</strong>
+                        <span>${escapeHtml(employee.email)}</span>
                     </div>
                 </div>
             </td>
 
             <td>
                 <span class="employee-department">
-                    ${employee.department}
+                    ${escapeHtml(employee.department)}
                 </span>
             </td>
 
             <td>
-                ${employee.designation}
+                ${escapeHtml(employee.designation)}
             </td>
 
             <td>
@@ -512,7 +566,7 @@ employeeForm.addEventListener(
 
 
                 const response =
-                    await fetch(
+                    await apiFetch(
 
                         `${API_URL}/${editingEmployeeId}`,
 
@@ -543,7 +597,7 @@ employeeForm.addEventListener(
 
 
                 const response =
-                    await fetch(
+                    await apiFetch(
 
                         API_URL,
 
@@ -645,7 +699,7 @@ employeeTable.addEventListener(
             try {
 
                 const response =
-                    await fetch(
+                    await apiFetch(
 
                         `${API_URL}/${employeeId}`,
 
@@ -1058,7 +1112,7 @@ if (departmentPageActive) {
                 <div class="department-card-top">
 
                     <h3>
-                        ${department}
+                        ${escapeHtml(department)}
                     </h3>
 
                     <span>
@@ -1160,7 +1214,7 @@ function renderDashboardEmployees() {
 
                     <div class="employee-avatar">
 
-                        ${initials}
+                        ${escapeHtml(initials)}
 
                     </div>
 
@@ -1169,14 +1223,14 @@ function renderDashboardEmployees() {
 
                         <strong>
 
-                            ${employee.name}
+                            ${escapeHtml(employee.name)}
 
                         </strong>
 
 
                         <span>
 
-                            ${employee.designation}
+                            ${escapeHtml(employee.designation)}
 
                         </span>
 
@@ -1187,7 +1241,7 @@ function renderDashboardEmployees() {
 
                 <div class="employee-department">
 
-                    ${employee.department}
+                    ${escapeHtml(employee.department)}
 
                 </div>
 
@@ -1348,7 +1402,7 @@ function renderDashboardDepartments() {
 
                         <span class="department-name">
 
-                            ${department}
+                            ${escapeHtml(department)}
 
                         </span>
 
@@ -1657,7 +1711,7 @@ function renderReportsDepartments(
                 <div class="report-department-top">
 
                     <strong>
-                        ${department}
+                        ${escapeHtml(department)}
                     </strong>
 
                     <span>
@@ -1731,7 +1785,7 @@ function renderReportsEmployees() {
 
                     <strong>
 
-                        ${employee.name}
+                        ${escapeHtml(employee.name)}
 
                     </strong>
 
@@ -1740,14 +1794,14 @@ function renderReportsEmployees() {
 
                 <td>
 
-                    ${employee.department}
+                    ${escapeHtml(employee.department)}
 
                 </td>
 
 
                 <td>
 
-                    ${employee.designation}
+                    ${escapeHtml(employee.designation)}
 
                 </td>
 
@@ -1931,4 +1985,38 @@ viewAllEmployees.addEventListener(
    START
    ========================================================= */
 
-loadEmployees();
+const logoutButton = document.querySelector("#logoutButton");
+
+logoutButton.addEventListener("click", async function () {
+    try {
+        const response = await apiFetch("/api/auth/logout", { method: "POST" });
+        if (!response.ok) {
+            throw new Error("Could not end administrator session.");
+        }
+        window.location.href = "login.html";
+    } catch (error) {
+        alert("Could not sign out. Please try again.");
+    }
+});
+
+async function startApplication() {
+    try {
+        const response = await fetch("/api/auth/me", { credentials: "same-origin" });
+        if (response.status === 401) {
+            window.location.href = "login.html";
+            return;
+        }
+        if (!response.ok) {
+            throw new Error("Could not verify administrator session.");
+        }
+
+        const administrator = await response.json();
+        document.querySelector("#adminDisplayName").textContent = administrator.fullName;
+        document.querySelector("#adminDisplayUsername").textContent = administrator.username;
+        await loadEmployees();
+    } catch (error) {
+        setSystemStatus("offline");
+    }
+}
+
+startApplication();

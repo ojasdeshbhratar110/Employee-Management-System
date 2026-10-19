@@ -1358,6 +1358,26 @@ tbody tr:hover {
 
     font-size: 9.5px;
 }
+
+.sidebar-logout {
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background: transparent;
+    color: #d0d5dd;
+    font: inherit;
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sidebar-logout:hover {
+    background: var(--sidebar-hover);
+    color: #ffffff;
+}
+
 /* =========================================================
    PREMIUM DEPARTMENT OVERVIEW
    ========================================================= */

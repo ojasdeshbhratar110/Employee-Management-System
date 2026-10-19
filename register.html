@@ -325,13 +325,12 @@
         <div class="brand-content">
 
             <h1>
-                Create your administrator account.
+                Public administrator registration is disabled.
             </h1>
 
             <p>
-                Register an authorized administrator to manage
-                employees, departments, workforce reports and
-                organizational insights.
+                Administrator accounts are provisioned by the system owner.
+                Use the sign-in page if you already have an account.
             </p>
 
         </div>
@@ -348,111 +347,21 @@
         <div class="register-form-wrapper">
 
             <span class="register-label">
-                ADMIN REGISTRATION
+                ADMINISTRATOR ACCESS
             </span>
 
-            <h2>Create account</h2>
+            <h2>Registration unavailable</h2>
 
             <p class="subtitle">
-                Set up your administrator credentials.
+                Public registration is disabled. Administrator setup is restricted to the system owner.
             </p>
-
-
-            <form id="registerForm">
-
-                <div class="form-group">
-
-                    <label for="fullName">
-                        Full Name
-                    </label>
-
-                    <input
-                        id="fullName"
-                        type="text"
-                        placeholder="Enter administrator name"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="username">
-                        Username
-                    </label>
-
-                    <input
-                        id="username"
-                        type="text"
-                        placeholder="Choose username"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="password">
-                        Password
-                    </label>
-
-                    <input
-                        id="password"
-                        type="password"
-                        placeholder="Create password"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="confirmPassword">
-                        Confirm Password
-                    </label>
-
-                    <input
-                        id="confirmPassword"
-                        type="password"
-                        placeholder="Confirm password"
-                        required
-                    >
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="register-btn"
-                >
-                    Create Administrator Account
-                </button>
-
-
-                <div
-                    id="errorMessage"
-                    class="message error"
-                ></div>
-
-                <div
-                    id="successMessage"
-                    class="message success"
-                >
-                    Administrator registered successfully.
-                </div>
-
-            </form>
-
 
             <div class="login-link">
 
-                Already registered?
+                Already have an administrator account?
 
                 <a href="login.html">
-                    Sign in
+                    Go to sign in
                 </a>
 
             </div>
@@ -463,142 +372,6 @@
 
 </div>
 
-
-<script>
-
-    const registerForm =
-        document.querySelector("#registerForm");
-
-    const errorMessage =
-        document.querySelector("#errorMessage");
-
-    const successMessage =
-        document.querySelector("#successMessage");
-
-
-    registerForm.addEventListener(
-        "submit",
-        function(event) {
-
-            event.preventDefault();
-
-            errorMessage.style.display = "none";
-            successMessage.style.display = "none";
-
-
-            const fullName =
-                document.querySelector("#fullName")
-                    .value.trim();
-
-            const username =
-                document.querySelector("#username")
-                    .value.trim();
-
-            const password =
-                document.querySelector("#password")
-                    .value;
-
-            const confirmPassword =
-                document.querySelector("#confirmPassword")
-                    .value;
-
-
-            if (username.length < 4) {
-
-                errorMessage.innerText =
-                    "Username must contain at least 4 characters.";
-
-                errorMessage.style.display =
-                    "block";
-
-                return;
-            }
-
-
-            if (password.length < 6) {
-
-                errorMessage.innerText =
-                    "Password must contain at least 6 characters.";
-
-                errorMessage.style.display =
-                    "block";
-
-                return;
-            }
-
-
-            if (password !== confirmPassword) {
-
-                errorMessage.innerText =
-                    "Passwords do not match.";
-
-                errorMessage.style.display =
-                    "block";
-
-                return;
-            }
-
-
-            const existingAdmins =
-                JSON.parse(
-                    localStorage.getItem("emsAdmins")
-                ) || [];
-
-
-            const usernameExists =
-                existingAdmins.some(
-                    admin =>
-                        admin.username.toLowerCase()
-                        === username.toLowerCase()
-                );
-
-
-            if (usernameExists) {
-
-                errorMessage.innerText =
-                    "This username is already registered.";
-
-                errorMessage.style.display =
-                    "block";
-
-                return;
-            }
-
-
-            const newAdmin = {
-                fullName: fullName,
-                username: username,
-                password: password
-            };
-
-
-            existingAdmins.push(newAdmin);
-
-
-            localStorage.setItem(
-                "emsAdmins",
-                JSON.stringify(existingAdmins)
-            );
-
-
-            successMessage.style.display =
-                "block";
-
-
-            setTimeout(
-                function() {
-
-                    window.location.href =
-                        "login.html";
-
-                },
-                1000
-            );
-
-        }
-    );
-
-</script>
 
 </body>
 </html>

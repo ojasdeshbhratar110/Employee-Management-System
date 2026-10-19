@@ -3,12 +3,12 @@ package employee_management;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
-@CrossOrigin(origins = "*")
 public class EmployeeController {
 
     private final EmployeeManager employeeManager;
@@ -35,7 +35,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> addEmployee(@Valid @RequestBody Employee employee) {
 
         Employee createdEmployee = employeeManager.addEmployee(employee);
 
@@ -47,7 +47,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(
             @PathVariable int id,
-            @RequestBody Employee employee) {
+            @Valid @RequestBody Employee employee) {
 
         Employee updatedEmployee =
                 employeeManager.updateEmployee(id, employee);
